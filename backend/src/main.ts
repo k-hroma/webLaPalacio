@@ -1,6 +1,11 @@
 import { startServer } from "./server";
 
 const main = async () => { 
-await startServer()
-}
-main()
+  try {
+    await startServer();
+  } catch (error:unknown) {
+    console.error("Failed to start server:", error);
+    process.exit(1);
+  }
+};
+main();

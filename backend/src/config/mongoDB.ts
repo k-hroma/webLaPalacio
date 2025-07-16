@@ -46,7 +46,7 @@ const connectMongoDB = async (): Promise<ConnectResults> => {
     // el resultado de esa comparación es un booleano
     const isConnected = resultConnection.connection.readyState === ConnectionStates.connected
     if (!isConnected) {
-      throw new Error("Connection established but not readyd")
+      throw new Error("Connection established but not ready")
     }
     // si no hubieron errores de conexión entonces modifico la propiedad de la variable connectMDB a true
     connectMDB.isConnected = true
@@ -70,7 +70,7 @@ const connectMongoDB = async (): Promise<ConnectResults> => {
     
   } catch (error: unknown) {
     // manejo de errores y retorno de un objeto que respeta la interface de ConnectResult
-    const errMsg = error instanceof Error ? error.message : "Fatal error: conection MongoDB failed"
+    const errMsg = error instanceof Error ? error.message : "Fatal error: connection MongoDB failed"
     console.error(errMsg)
     return {
       success: false,

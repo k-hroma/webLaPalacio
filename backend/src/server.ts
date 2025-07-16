@@ -10,7 +10,7 @@ const PORT = Number(process.env.PORT) || 3000
 // defino función asyn para inicializar el servidor
 const startServer = async (): Promise<ConnectResults> => {
   // verifico la existencia de la variable de entorno para establecer el puerto y si es un número válido
-  if (!PORT || Number(isNaN(PORT))) {
+  if (!PORT || isNaN(PORT)) {
     const errMsg = "Invalid or missing PORT enviroment variable."
     console.error(errMsg)
     return {
@@ -30,13 +30,14 @@ const startServer = async (): Promise<ConnectResults> => {
     // si la conexión es correcta envío un mensaje a la consola
     console.log(dbConnect.message)
 
-    const msgConfirmation = `Server is running on port ${PORT};`
+    const msgConfirmation = `Server is running on port ${PORT}`;
     const apiUrlBooks = `http://localhost:${PORT}/books`;
 
     // el servidor express comienza a escuchar las conexiones entrantes en el puerto definido en la variable de entorno
     const listenPort = app.listen(PORT, () => {
       console.log(msgConfirmation);
-      console.log(`API Books available at: ${apiUrlBooks}`)
+            console.log(`Books API endpoint: ${apiUrlBooks}`);
+
     });
 
     // app.listen() siempre devuelve un servidor válido o lanza un error, asi que no es necesario verificarlo

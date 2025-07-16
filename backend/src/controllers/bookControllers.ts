@@ -21,7 +21,7 @@ const getBooks = async (req: Request, res: Response<QueryResponse>, next: NextFu
     const books: IBook[] = await Book.find()
     res.status(200).json({
       success: true,
-      message: books.length > 0 ? "Books found" : "Database is empty",
+      message: books.length > 0 ? "Books retrieved successfully." : "No books found in the database.",
       data: books
     });
     return
@@ -36,13 +36,13 @@ const addBook = async (req: Request<{}, {}, AddBookBody>, res: Response<QueryRes
   const parseResult = AddBookSchema.safeParse(req.body)
   
   if (!parseResult.success) {
-    const errMsg = "Invalid input data"
+    const errMsg = "Validation failed: Invalid input data."
     res.status(400).json({
       success: false,
       message:errMsg ,
       error: parseResult.error
     });
-    console.error(errMsg)
+    console.error(`${errMsg}:`, parseResult.error)
     return;
   }
   const dataBook = parseResult.data;
@@ -52,18 +52,20 @@ const addBook = async (req: Request<{}, {}, AddBookBody>, res: Response<QueryRes
     const newBook = await Book.create(dataBook)
     res.status(201).json({
       success: true,
-      message: "Book successfully created.",
+      message: "New book added to database successfully.",
       data: newBook
     });
     return
     
   } catch (error: unknown) {
     if ((error as any).code === 11000) {
+      const errMsg = "Duplicate ISBN error (code 11000)"
       res.status(409).json({
         success: false,
-        message: "The ISBN already exists in the database.",
+        message: "Duplicate entry: ISBN already exists.",
         error: 11000
       });
+      console.error(errMsg);
       return;
     }
     next(error)
@@ -97,13 +99,13 @@ const updateBook = async (req: Request<{ id: string }, {}, UpdateBookBody>, res:
   // valido que los datos tengan el formato del updateBookSchema con zod
   const parseResult = UpdateBookSchema.safeParse(req.body);
   if (!parseResult.success) {
-    const errMsg = "Invalid input data"
+    const errMsg = "Validation failed: Invalid input data."
     res.status(400).json({
       success: false,
       message: errMsg,
       error: parseResult.error
     });
-    console.error(errMsg)
+    console.error(`${errMsg}:`, parseResult.error);
     return;
   }
 
@@ -113,7 +115,7 @@ const updateBook = async (req: Request<{ id: string }, {}, UpdateBookBody>, res:
   try {
     const updatedBook = await Book.findByIdAndUpdate(id, updateDataBook, { new: true });
     if (!updatedBook) {
-      const errMsg = `Book with ID ${id} not found.`
+      const errMsg = `No book found with ID: ${id}.`;
       res.status(404).json({
         success: false,
         message: errMsg,
@@ -124,7 +126,7 @@ const updateBook = async (req: Request<{ id: string }, {}, UpdateBookBody>, res:
 
     res.status(200).json({
       success: true,
-      message: "Book successfully updated",
+      message: "Book updated successfully.",
       data: updatedBook
     });
     return
@@ -170,7 +172,7 @@ const deleteBook = async (req: Request<{ id: string }>, res: Response<QueryRespo
     }
     res.status(200).json({
       success: true,
-      message: "Book successfully deleted.",
+      message: "Book deleted from database successfully.",
       data: deletedBook
     });
     

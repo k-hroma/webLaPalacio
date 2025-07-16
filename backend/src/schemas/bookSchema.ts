@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 const AddBookSchema = z.object({
   img: z.string().min(1),
-  isbn: z.string(),
+  isbn: z.string().min(1, "ISBN is required"),
   title: z.string().min(1),
   lastName: z.string().min(1),
   firstName: z.string().min(1),
