@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { ErrorResult } from "../types/errorResult";
 
+// Middleware que permite el acceso solo a usuarios con rol "admin"
 const isAdmin = async (req: Request, res: Response<ErrorResult>, next: NextFunction): Promise<void> => {
   try {
     if (req.user?.role !== "admin") {
@@ -12,9 +13,10 @@ const isAdmin = async (req: Request, res: Response<ErrorResult>, next: NextFunct
       console.error(`[AUTHORIZATION ERROR] ${errMsg}`);
       return;
     }
-    console.log("Acceso autorizado")
+    // El usuario tiene rol admin, continúa con la ejecución
     next();
   } catch (error: unknown) {
+    // Manejo de errores inesperados
     console.error("[UNEXPECTED ERROR - isAdmin]", error);
     next(error);
   }

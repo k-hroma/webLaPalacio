@@ -5,23 +5,24 @@ import { bookRouter } from './routes/bookRoutes'
 import { authRouter } from './routes/authRoutes'
 import { protectBooksRoutes } from './middleware/protectBooksRoutes'
 
-// creo una instancia de express -> sirve para definir rutas, middlewares y manejar las peticiones HTTP
+// Instancia de Express para definir rutas, middlewares y manejar peticiones HTTP
 const app = express()
 
-// permite que el servidor parsee automáticamente el body de las peticiones HTTP con contenido JSON
+// Middleware para parsear automáticamente cuerpos JSON en las peticiones HTTP
 app.use(express.json())
 
-// permite que el backend pueda recibir peticiones desde dominios diferentes al mio
+// Middleware para permitir solicitudes CORS desde otros orígenes
 app.use(cors())
 
-// Monta el router bookRouter con un middleware condicional
+// Monta el router de libros con middleware de protección previa
 app.use("/books", protectBooksRoutes, bookRouter)
 
-//Monta el router authRouter en la ruta base /auth->
-//Eso significa que todas las rutas definidas dentro de authRouter se accederán con prefijo /auth.
+// Monta el router de autenticación en la ruta base /auth
+// Todas las rutas internas se accederán con el prefijo /auth
 app.use("/auth", authRouter)
 
-// middleware de manejo de errores
+// Middleware global de manejo de errores
 app.use(handleErrors)
-// exporto la instancia de app para utilizarla en server.ts e inicializar el servidor
+
+// Exporto la instancia de Express para inicializar el servidor en server.ts
 export { app }

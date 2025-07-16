@@ -1,54 +1,49 @@
 import { app } from "./app";
 import { ConnectResults } from "./types/connectionResults";
-import dotenv from 'dotenv'
 import { connectMongoDB } from "./config/mongoDB";
-dotenv.config()
 
-// defino variable PORT
+// Defino la variable PORT a partir de la variable de entorno o uso el puerto 3000 por defecto
 const PORT = Number(process.env.PORT) || 3000
 
-// defino función asyn para inicializar el servidor
+// Función asíncrona para inicializar el servidor y la conexión a la base de datos
 const startServer = async (): Promise<ConnectResults> => {
-  // verifico la existencia de la variable de entorno para establecer el puerto y si es un número válido
+  // Verifico que PORT sea un número válido
   if (!PORT || isNaN(PORT)) {
-    const errMsg = "Invalid or missing PORT enviroment variable."
+    const errMsg = "Invalid or missing PORT environment variable."
     console.error(errMsg)
     return {
       success: false,
       message: errMsg
     }
   }
-  
   try {
-    // Establezco conexion con base de datos
+    // Intento establecer la conexión con la base de datos MongoDB
     const dbConnect = await connectMongoDB()
     if (!dbConnect.success) {
       const errMsg = dbConnect.message
       console.error(errMsg)
       throw new Error(errMsg)
     }
-    // si la conexión es correcta envío un mensaje a la consola
+    // Conexión exitosa, imprimo mensaje en consola
     console.log(dbConnect.message)
 
     const msgConfirmation = `Server is running on port ${PORT}`;
     const apiUrlBooks = `http://localhost:${PORT}/books`;
 
-    // el servidor express comienza a escuchar las conexiones entrantes en el puerto definido en la variable de entorno
-    const listenPort = app.listen(PORT, () => {
+    // Inicio el servidor Express y escucho en el puerto definido
+    app.listen(PORT, () => {
       console.log(msgConfirmation);
-            console.log(`Books API endpoint: ${apiUrlBooks}`);
-
+      console.log(`Books API endpoint: ${apiUrlBooks}`);
     });
 
-    // app.listen() siempre devuelve un servidor válido o lanza un error, asi que no es necesario verificarlo
-    // si todo va bien retorno un objeto que respeta la interface de ConnectResult
+    // Retorno objeto indicando éxito en la conexión y arranque del servidor
     return {
       success: true,
       message: msgConfirmation
     }
     
   } catch (error: unknown) {
-    // manejo de errores
+    // Capturo y manejo errores, mostrando mensaje en consola y retornando fallo
     const errMsg = error instanceof Error ? error.message : "Unknown error"
     console.error(errMsg)
     return {
@@ -58,5 +53,5 @@ const startServer = async (): Promise<ConnectResults> => {
   }
 };
 
-// exporto esta función para utilizarla en el controlador main.
+// Exporto la función para utilizarla en el punto de entrada (main)
 export { startServer }

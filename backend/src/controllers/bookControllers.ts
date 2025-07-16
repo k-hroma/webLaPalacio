@@ -6,14 +6,15 @@ import { Book } from '../models/bookModel'
 import mongoose from 'mongoose'
 
 // Request es el tipo genérico de Express para una solicitud HTTP (req). Este tipo recibe hasta 4 parámetros genéricos: // Request<Params, ResBody, ReqBody, ReqQuery>
-
 // Response<T> es el tipo de respuesta de Express (res).
-
 // next es la función que se llama para pasar al siguiente middleware si hay uno.
-
 // La función es async, por eso devuelve una Promise. Como no retorna nada directamente (no hay return algo), se especifica Promise<void>.
-
 // La línea next(error) se utiliza en Express para delegar el manejo de errores al middleware de manejo de errores, que es una función especial al final de tu cadena de middlewares y rutas.
+
+/**
+ * Controlador para obtener todos los libros.
+ * Devuelve un array vacío si no hay libros en la base de datos.
+ */
 
 const getBooks = async (req: Request, res: Response<QueryResponse>, next: NextFunction): Promise<void> => {
   try {
@@ -29,10 +30,14 @@ const getBooks = async (req: Request, res: Response<QueryResponse>, next: NextFu
   } catch (error: unknown) {
     next(error)
   }
- }
+}
+ 
+/**
+ * Controlador para agregar un nuevo libro.
+ * Valida los datos recibidos con Zod antes de guardarlos.
+ */
 
 const addBook = async (req: Request<{}, {}, AddBookBody>, res: Response<QueryResponse>, next: NextFunction): Promise<void> => { 
-  // valido los datos recibidos en el body usando Zod-> devuelve un objeto {success/data o success/erros}
   const parseResult = AddBookSchema.safeParse(req.body)
   
   if (!parseResult.success) {
@@ -46,8 +51,7 @@ const addBook = async (req: Request<{}, {}, AddBookBody>, res: Response<QueryRes
     return;
   }
   const dataBook = parseResult.data;
-  // const { img, isbn, title, lastName, firstName, editorial, price, stock } = req.body
-  // const dataBook = {img, isbn, title, lastName, firstName, editorial, price, stock}
+  // const { img, isbn, title, lastName, firstName, editorial, price, stock } = parseResult.data;
   try {
     const newBook = await Book.create(dataBook)
     res.status(201).json({
@@ -72,10 +76,13 @@ const addBook = async (req: Request<{}, {}, AddBookBody>, res: Response<QueryRes
   }
 }
 
+/**
+ * Controlador para actualizar un libro existente por ID.
+ * Verifica el formato del ID y valida los datos con Zod.
+ */
+
 const updateBook = async (req: Request<{ id: string }, {}, UpdateBookBody>, res: Response<QueryResponse>, next: NextFunction): Promise<void> => {
-  // desestructurar id
   const { id } = req.params
-  // verificar que el id exista
   if (!id) {
     const errMsg = "Book ID is required."
     res.status(400).json({
@@ -85,7 +92,7 @@ const updateBook = async (req: Request<{ id: string }, {}, UpdateBookBody>, res:
     console.error(errMsg)
     return
   }
-  // verificar que el ID tenga el formato correcto
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     const errMsg = "Invalid ID format."
     res.status(400).json({
@@ -96,7 +103,6 @@ const updateBook = async (req: Request<{ id: string }, {}, UpdateBookBody>, res:
     return
   }
   
-  // valido que los datos tengan el formato del updateBookSchema con zod
   const parseResult = UpdateBookSchema.safeParse(req.body);
   if (!parseResult.success) {
     const errMsg = "Validation failed: Invalid input data."
@@ -109,7 +115,6 @@ const updateBook = async (req: Request<{ id: string }, {}, UpdateBookBody>, res:
     return;
   }
 
-  //si el formato es correcto almaceno en una variable los datos recibidos en el body
   const updateDataBook = parseResult.data
 
   try {
@@ -136,10 +141,13 @@ const updateBook = async (req: Request<{ id: string }, {}, UpdateBookBody>, res:
   }
 };
 
+/**
+ * Controlador para eliminar un libro por ID.
+ * Verifica el formato del ID antes de proceder con la eliminación.
+ */
+
 const deleteBook = async (req: Request<{ id: string }>, res: Response<QueryResponse>, next: NextFunction): Promise<void> => {
-  // desestructurar id
   const { id } = req.params
-  // verificar que el id exista
   if (!id) {
     const errMsg = "Book ID is required."
     res.status(400).json({
@@ -149,7 +157,6 @@ const deleteBook = async (req: Request<{ id: string }>, res: Response<QueryRespo
     console.error(errMsg)
     return
   }
-  // verificar que el ID tenga el formato correcto
   if (!mongoose.Types.ObjectId.isValid(id)) {
     const errMsg = "Invalid ID format."
     res.status(400).json({

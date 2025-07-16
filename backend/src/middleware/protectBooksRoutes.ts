@@ -1,23 +1,24 @@
-import { Request, Response, NextFunction } from "express";
-import { authMiddleware } from "./authMiddleware";
-import { isAdmin } from "./isAdmin";
+import { Request, Response, NextFunction } from "express"
+import { authMiddleware } from "./authMiddleware"
+import { isAdmin } from "./isAdmin"
 
-// Este middleware decide si la ruta necesita protección según el método
+// Middleware que protege ciertas rutas según el método HTTP
 const protectBooksRoutes = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  const protectedMethods = ["POST", "PATCH", "DELETE"];
+  const protectedMethods = ["POST", "PATCH", "DELETE"]
 
+  // Si el método requiere protección, aplico autenticación y verificación de rol admin
   if (protectedMethods.includes(req.method)) {
     try {
       await authMiddleware(req, res, async (authErr) => {
-        if (authErr) return next(authErr);
-        return isAdmin(req, res, next);
-      });
+        if (authErr) return next(authErr)
+        return isAdmin(req, res, next)
+      })
     } catch (error) {
-      next(error);
+      next(error)
     }
   } else {
-    next(); 
+    // Métodos no protegidos (GET, etc.) continúan sin validación
+    next()
   }
-};
-
-export {protectBooksRoutes }
+}
+export { protectBooksRoutes }

@@ -1,10 +1,12 @@
 import { Request, Response, NextFunction } from "express"
 import { ErrorResult } from "../types/errorResult"
 
+// Middleware centralizado para manejar errores en toda la aplicación
 const handleErrors = async (error: unknown, req: Request, res: Response<ErrorResult>, next: NextFunction): Promise<void> => {
   const errMsg = error instanceof Error ? error.message : "Unknown error"
   const errCode = (error as any).statusCode || 500
-
+  
+  // Envía respuesta JSON con código de error y mensaje
   res.status(errCode).json({ 
     success: false,
     message: errMsg, 

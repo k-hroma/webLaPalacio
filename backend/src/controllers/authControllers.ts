@@ -5,7 +5,7 @@ import { User } from "../models/authModel"
 import bcryptjs from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
-// registro de usuario común ----> auth/ register
+// registro de usuario común ----> POST/auth/ register
 const registerUser = async (req: Request<{}, {}, registerUserBody>, res: Response<QueryResponse>, next: NextFunction): Promise<void> => {
   const parseUserRegisterData = RegisterUserSchema.safeParse(req.body)
   if (!parseUserRegisterData.success) { 
@@ -19,6 +19,7 @@ const registerUser = async (req: Request<{}, {}, registerUserBody>, res: Respons
     return;
   }
   const { name, email, password } = parseUserRegisterData.data
+  // Verifico si el email ya está registrado
   const existingUser = await User.findOne({ email })
   if (existingUser) { 
     const errMsg = "Email is already registered.";
@@ -29,8 +30,11 @@ const registerUser = async (req: Request<{}, {}, registerUserBody>, res: Respons
     console.error(errMsg)
     return
   }
+
+  // Hasheo la contraseña
   const hashedPassword = await bcryptjs.hash(password, 10)
   try {
+    // Registro del nuevo usuario
     const newUser = await User.create({ name, email, password: hashedPassword })
     const msg = "User successfully registered.";
     res.status(201).json({
@@ -42,9 +46,8 @@ const registerUser = async (req: Request<{}, {}, registerUserBody>, res: Respons
         email: newUser.email,
         role: newUser.role
       },
-      
     });
-    console.log(`User successfully registered. ID: ${newUser._id}, Name: ${newUser.name}, Email: ${newUser.email}`);
+    console.log(`[USER REGISTERED] ${newUser.email}`);
     return
     
   } catch (error: unknown) {
@@ -62,7 +65,7 @@ const registerUser = async (req: Request<{}, {}, registerUserBody>, res: Respons
   }
 }
 
-// registro de usuario admin ----> auth/admin
+// registro de usuario admin ----> POST/auth/admin
 const registerAdmin = async (req: Request<{}, {}, registerUserBody>, res: Response<QueryResponse>, next: NextFunction): Promise<void> => {
   const parseAdminData = RegisterUserSchema.safeParse(req.body);
   if (!parseAdminData.success) {
@@ -91,11 +94,12 @@ const registerAdmin = async (req: Request<{}, {}, registerUserBody>, res: Respon
   const hashedPassword = await bcryptjs.hash(password, 10);
 
   try {
+    // Registro con rol "admin"
     const newAdmin = await User.create({
       name,
       email,
       password: hashedPassword,
-      role: "admin" // esto es importante porque modifica el default "user"
+      role: "admin" 
     });
 
     const msg = "Admin user successfully registered.";
@@ -118,9 +122,12 @@ const registerAdmin = async (req: Request<{}, {}, registerUserBody>, res: Respon
   }
 };
 
-// login de usuarios
+/**
+ * Inicio de sesión de usuarios -> POST /auth/login
+ */
+
 const loginUser = async (req: Request<{}, {}, loginUserBody>, res: Response<QueryResponse>, next: NextFunction): Promise<void> => { 
-  // 1. Validar datos con Zod
+  // Validación de datos con Zod
   const parseUserLoginData = LoginUserSchema.safeParse(req.body)
   if (!parseUserLoginData.success) { 
     const errMsg = "Invalid login data provided.";
@@ -134,7 +141,7 @@ const loginUser = async (req: Request<{}, {}, loginUserBody>, res: Response<Quer
   }
   const { email, password } = parseUserLoginData.data
   try {
-    // 2. Buscar usuario en base de datos
+    // Buscar usuario por email
     const existingUser = await User.findOne({ email });
     if (!existingUser) { 
       const errMsg = `User with email "${email}" not found.`
@@ -145,7 +152,7 @@ const loginUser = async (req: Request<{}, {}, loginUserBody>, res: Response<Quer
       console.error(`[LOGIN ERROR] ${errMsg}`)
       return
     }
-     // 3. Verificar contraseña
+    // Verificar contraseña
     const isPasswordValid = await bcryptjs.compare(password, existingUser.password)
     if (!isPasswordValid) {
       const errMsg = "Incorrect password"
@@ -156,8 +163,8 @@ const loginUser = async (req: Request<{}, {}, loginUserBody>, res: Response<Quer
       console.error(`[LOGIN ERROR] ${errMsg}`);
       return
     }
-    // 4. Generar JWT con payload 
 
+    // Generar token JWT con payload personalizado 
     const payload = {
       id: existingUser._id,
       name: existingUser.name,
@@ -177,7 +184,8 @@ const loginUser = async (req: Request<{}, {}, loginUserBody>, res: Response<Quer
     };
 
     const token = jwt.sign(payload, secretKey, { expiresIn: "10m" })
-    // 5. Responder con datos relevantes
+
+    // Enviar respuesta con token y datos del usuario
     const msg = "User logged in successfully."
     res.status(200).json({
       success: true, 
@@ -195,9 +203,7 @@ const loginUser = async (req: Request<{}, {}, loginUserBody>, res: Response<Quer
     
   } catch (error: unknown) {
     next(error)
-    
   }
-
 }
 
 export { registerUser, loginUser, registerAdmin}
