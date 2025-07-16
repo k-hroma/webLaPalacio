@@ -3,7 +3,7 @@ import cors from 'cors'
 import { handleErrors } from './middleware/handleErrors'
 import { bookRouter } from './routes/bookRoutes'
 import { authRouter } from './routes/authRoutes'
-import { authMiddleware } from './middleware/authMiddleware'
+import { protectBooksRoutes } from './middleware/protectBooksRoutes'
 
 // creo una instancia de express -> sirve para definir rutas, middlewares y manejar las peticiones HTTP
 const app = express()
@@ -14,20 +14,8 @@ app.use(express.json())
 // permite que el backend pueda recibir peticiones desde dominios diferentes al mio
 app.use(cors())
 
-// rutas de la api
-
-// Middleware condicional por método HTTP
-// Monta el router bookRouter en /books, pero con una capa de middleware previa->
-// Este middleware aplica `authMiddleware` solo a métodos protegidos (POST, PATCH, DELETE),
-// que requieren autenticación/autorización.
-
-app.use("/books", (req, res, next) => {
-  const protectedMethods = ["POST", "PATCH", "DELETE"];
-  if (protectedMethods.includes(req.method)) {
-    return authMiddleware(req, res, next);
-  }
-  next();
-}, bookRouter)
+// Monta el router bookRouter con un middleware condicional
+app.use("/books", protectBooksRoutes, bookRouter)
 
 //Monta el router authRouter en la ruta base /auth->
 //Eso significa que todas las rutas definidas dentro de authRouter se accederán con prefijo /auth.

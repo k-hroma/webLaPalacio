@@ -1,7 +1,16 @@
 interface IUser { 
   name: string,
   email: string,
-  password:string
+  password: string,
+  role: "admin" | "user";
 }
 
-export { IUser }
+interface IRegisterUser { 
+  id: string, 
+  name: string,
+  email: string,
+  role: "admin" | "user"
+
+}
+
+export { IUser, IRegisterUser }

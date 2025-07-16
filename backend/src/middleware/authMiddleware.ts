@@ -1,11 +1,12 @@
 import jwt from "jsonwebtoken"
 import { Request, Response, NextFunction } from "express"
 import { ErrorResult } from "../types/errorResult"
+import { AuthPayload } from "../types/authPayload"
 
 const authMiddleware = async (req: Request, res: Response<ErrorResult>, next: NextFunction): Promise<void> => {
   const header = req.headers.authorization
   
-  if (!header || !header.startsWith("Bearer ")) {
+  if (!header || !header.startsWith("Bearer")) {
     const errMsg = "Authorization header missing."
     res.status(401).json({
       success: false,
@@ -29,9 +30,9 @@ const authMiddleware = async (req: Request, res: Response<ErrorResult>, next: Ne
   }
   
   try {
-    const decoded = jwt.verify(token, secretKey)
+    const decoded = jwt.verify(token, secretKey) as AuthPayload
     //jwt.verify lanza un error si el token es inválido o expirado, así que if (!decoded) es innecesario.
-    // req.user = decoded
+    req.user = decoded
     console.log(`${decoded}: Authentication successful`)
     next()
 
