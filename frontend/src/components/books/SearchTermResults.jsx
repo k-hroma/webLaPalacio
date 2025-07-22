@@ -1,0 +1,4 @@
+
+const searchTermResults = () => { }
+
+export { searchTermResults }

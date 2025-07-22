@@ -7,78 +7,9 @@
 }
 
 .header-bg-img-container {
-  background-image: url('../../assets/img/header-bg.png');
+  background-image: url('../../assets/img/Header.svg');
   background-position: center;
   background-size: cover;
   width: 100%;
   height: 100vh;
-}
-
-/* Moving header */
-.animate-nav {
-  display: flex;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 10;
-  width: 200%; 
-  animation: move 30s linear infinite;
-  will-change: transform;
-  min-width: 2000px;
-}
-
-.animated-nav-img {
-  width: 50%;
-  height: auto;
-}
-
-@keyframes move {
-  0% {
-    transform: translateX(-50%);
-  }
-  100% {
-    transform: translateX(0); 
-  }
-}
-
-/* Buttons&Links */
-
-.nav-bar-container {
-  display: flex;
-  position: fixed;
-  justify-content: center;
-  align-items: center;
-  top: 0;
-  left: 0;
-  z-index: 9;
-  width: 100%; 
-}
-
-.left-nav {
-  display: flex;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 8;
-  padding-left: 2rem;
-  padding-top: 3.5rem;
-}
-
-.center-nav {
-  display: flex;
-  position: fixed;
-  top: -1rem;
-  z-index: 8;
-  padding-top: 3.5rem;
-}
-
-.right-nav {
-  display: flex;
-  position: fixed;
-  top: 0;
-  right: 0;
-  gap: .5rem;
-  z-index: 8;
-  padding-right: 2rem;
-  padding-top: 3.5rem;
 }

@@ -1,15 +1,18 @@
 import { Layout } from "../layout/Layout"
-
+import { HomeLatestBooks } from "../components/books/LatestBooks"
+import { Header } from '../components/header/Header'
+import { HomeWriters } from "../components/writers/HomeWriters"
+import { BannerGender } from '../components/banners/BannerGender'
+import { AboutUs } from "../components/aboutUs/AboutUs"
 const Home = () => { 
   return (
-      <Layout>
-      <h1>Componente Novedaes</h1>
-      <h1>Componente Escritores</h1>
-      <div>
-        <h1>Banner</h1>
-      </div>
-      <div>Banner sobre nosotrxs</div>
-      </Layout>
+    <Layout>
+      <Header/>
+      <HomeLatestBooks />
+      <HomeWriters />
+      <BannerGender />
+      <AboutUs/>
+    </Layout>
   )
 }
 

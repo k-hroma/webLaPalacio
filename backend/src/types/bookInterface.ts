@@ -7,6 +7,7 @@ interface IBook {
   editorial: string,
   price: number,
   stock?: number
+  latestBook: boolean
 }
 
 export { IBook }

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import { QueryResponse } from '../types/queryResponse'
 import { IBook } from '../types/bookInterface'
-import { AddBookSchema, AddBookBody, UpdateBookSchema, UpdateBookBody } from '../schemas/bookSchema'
+import { AddBookSchema, AddBookBody, UpdateBookSchema, UpdateBookBody, SearchBookQuerySchema, SearchBookQuery } from '../schemas/bookSchema'
 import { Book } from '../models/bookModel'
 import mongoose from 'mongoose'
 
@@ -188,4 +188,44 @@ const deleteBook = async (req: Request<{ id: string }>, res: Response<QueryRespo
   }
 };
 
-export { getBooks, addBook, updateBook, deleteBook }  
+
+const searchTerm = async (req: Request<{}, {}, {}, SearchBookQuery>, res: Response<QueryResponse>, next: NextFunction
+): Promise<void> => { 
+  try {
+    const parseResult = SearchBookQuerySchema.safeParse(req.query);
+    if (!parseResult.success) {
+      res.status(400).json({
+        success: false,
+        message: "Invalid search query",
+        error: parseResult.error
+      });
+      console.error("Search validation failed:", parseResult.error);
+      return;
+    }
+    
+    const { term } = parseResult.data;
+    const regex = new RegExp(term, "i");
+
+    const results: IBook[] = await Book.find({
+      $or: [
+        { isbn: regex },
+        { title: regex },
+        { lastName: regex },
+        { firstName: regex },
+        { editorial: regex }
+      ]
+    });
+
+    res.status(200).json({
+      success: true,
+      message: results.length > 0 ? "Search results retrieved." : "No matching books found.",
+      data: results
+    });
+    
+  } catch (error: unknown) {
+    next(error)
+  }
+
+}
+
+export { getBooks, addBook, updateBook, deleteBook, searchTerm }  

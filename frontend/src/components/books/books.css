@@ -1,0 +1,61 @@
+.books-container {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--beige);
+  padding-bottom: 8rem;
+  width: 100%;
+}
+
+.txt-books-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 3.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.txt-alllatestbooks-container, .txt-all-books-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 6.5rem;
+  padding-bottom: 1.5rem;
+
+}
+
+
+.novedades-section, .libros-section, .link-latest-books {
+  font-family: "Neue Montreal Medium";
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 130%;
+  color: var(--brown);
+}
+
+.link-latest-books:hover {
+  color: var(--pink);
+}
+
+.grid-container {
+  display: grid;
+  align-items: start;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 1.5rem;
+  grid-template-rows: repeat(2, 1fr);
+  row-gap: 1.5rem;
+  padding: 0 2rem;
+  @media (max-width: 880px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (max-width: 660px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 450px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+

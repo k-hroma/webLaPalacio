@@ -1,0 +1,64 @@
+.item-book-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+}
+
+.cover-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+.img-container {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  height: auto;
+}
+
+.img-container img {
+  width: 100%;
+  height: 100%;
+}
+
+ .info-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.txt-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.precio-content p {
+  font-family: 'PPEditorialNew';
+  font-weight: 100;
+  font-size: clamp(1rem, 1.5vw, 1.5rem);
+  line-height: 130%;
+  letter-spacing: -0.48px;
+  color: var(--pink);
+  margin-top: .5rem;
+}
+
+.txt-title {
+  margin-top: .5rem;
+  font-family: "Neue Montreal Medium";
+  font-size: clamp(1rem, 1.5vw, 1.5rem);
+  line-height: 130%;
+  color: var(--brown);
+  letter-spacing: -0.48px;
+}
+
+.txt-author {
+  font-family: "Neue Montreal Medium";
+  font-weight: 400;
+  font-size: clamp(1rem, 1.5vw, 1.5rem);
+  line-height: 130%;
+  color: var(--brown);
+
+}
