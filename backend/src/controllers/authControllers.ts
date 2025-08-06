@@ -2,20 +2,24 @@ import { Request, Response, NextFunction } from "express"
 import { loginUserBody, LoginUserSchema, registerUserBody, RegisterUserSchema } from "../schemas/authSchema"
 import { QueryResponse } from "../types/queryResponse"
 import { User } from "../models/authModel"
+import { z, ZodError } from 'zod'
 import bcryptjs from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+
 
 // registro de usuario común ----> POST/auth/ register
 const registerUser = async (req: Request<{}, {}, registerUserBody>, res: Response<QueryResponse>, next: NextFunction): Promise<void> => {
   const parseUserRegisterData = RegisterUserSchema.safeParse(req.body)
-  if (!parseUserRegisterData.success) { 
-    const errMsg = "Invalid user registration data.";
+  if (!parseUserRegisterData.success) {
+  const zodError = parseUserRegisterData.error as ZodError;
+  const errMsg = zodError.issues.map(issue => issue.message).join('\n');
+    
     res.status(400).json({
       success: false,
       message: errMsg,
       error: parseUserRegisterData.error
     });
-    console.error(`${errMsg}: `, parseUserRegisterData.error)
+    
     return;
   }
   const { name, email, password } = parseUserRegisterData.data
@@ -183,8 +187,10 @@ const loginUser = async (req: Request<{}, {}, loginUserBody>, res: Response<Quer
       return
     };
 
-    const token = jwt.sign(payload, secretKey, { expiresIn: "10m" })
+    // const token = jwt.sign(payload, secretKey, { expiresIn: "10m" })
 
+    const token = jwt.sign(payload, secretKey)
+    
     // Enviar respuesta con token y datos del usuario
     const msg = "User logged in successfully."
     res.status(200).json({

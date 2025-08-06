@@ -20,10 +20,16 @@ const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(() => localStorage.getItem("token"));
   //Creo una variable de estado llamada user.
   //La inicializo desde localStorage, pero decodificando el token para extraer datos del usuario (como email, id, role, etc.).
-  const [user, setUser] = useState(() => {
+  const getToken = () => {
     const storedToken = localStorage.getItem("token");
     return storedToken ? jwtDecode(storedToken) : null;
-  });
+  }
+  
+  const [user, setUser] = useState(getToken);
+
+  const [admin, setAdmin] = useState(getToken)
+
+  const [loggedOut, setLoggedOut] = useState(false);
 
   //Defino una función para guardar un nuevo token (por ejemplo, al hacer login).
   const handleToken = (token) => {
@@ -31,11 +37,13 @@ const AuthProvider = ({ children }) => {
       localStorage.setItem("token", token); //// lo guarda en localStorage
       setToken(token); //---------------------// lo guarda en el estado
       setUser(jwtDecode(token)); //-----------// lo decodifica y guarda el usuario
+      setLoggedOut(false)
     }
   };
 
   // Esta función cierra sesión: borra todo y resetea el estado
-  const handleLogout = () => {
+  const handleLogOut = () => {
+    setLoggedOut(true); // ✅ marcamos que fue un logout voluntario
     localStorage.removeItem("token");  // borra el token del navegador
     setToken(null);                    // limpia el estado local
     setUser(null);                     // borra el usuario
@@ -44,19 +52,20 @@ const AuthProvider = ({ children }) => {
   
   // Este useEffect se ejecuta una vez al montar el componente (por el []).
   // Verifica si el token está vencido (decoded.exp está en segundos, por eso se multiplica por 1000).
+  
   // Si ya expiró, ejecuta handleLogout() automáticamente.
   useEffect(() => {
     if (token) {
       const decoded = jwtDecode(token);
       if (decoded.exp * 1000 < Date.now()) {
-        handleLogout();
+        handleLogOut();
       }
     }
   }, []);
   // Retorna el proveedor del contexto (<AuthContext.Provider>), con los valores que va a compartir:
   
   return (
-    <AuthContext.Provider value={{ user, token, handleToken, handleLogout }}>
+    <AuthContext.Provider value={{ user, token, admin, setUser, setAdmin, handleToken, handleLogOut, setLoggedOut }}>
       {children}
     </AuthContext.Provider>
   );

@@ -55,6 +55,9 @@
   top: -1rem;
   z-index: 8;
   padding-top: 3.5rem;
+   @media (max-width: 768px) {
+    display: none;
+  }
 }
 
 .right-nav {
@@ -73,5 +76,12 @@
   border: none;
   cursor: pointer;
   align-self: center;
+
+}
+
+.user-auth {
+  @media (max-width: 768px) {
+    display: none;
+  }
 
 }

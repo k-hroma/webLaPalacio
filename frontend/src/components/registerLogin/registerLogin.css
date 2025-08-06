@@ -1,0 +1,59 @@
+.open-register-login-container {
+  display: flex;
+  flex-direction:column;
+  width: 30%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  overflow-y: auto;
+  box-sizing: border-box;
+
+  @media (max-width: 1400px) {
+    width: 45%;
+  }
+
+  @media (max-width: 850px) {
+    width: 70%;
+  }
+
+  @media (max-width: 550px) {
+    width: 100%;
+  }
+}
+
+.menu-links-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start;
+  background-color: var(--brown);
+  padding: 3.5rem 2rem 4.1rem 2rem;
+  box-sizing: border-box;
+}
+
+.register-login-link {
+  display: flex;
+  text-decoration: none;
+  color: var(--orange);
+  font-family: 'Neue Montreal Regular';
+  font-size: 3rem;
+  line-height: 1;
+
+  @media (max-width: 425px) {
+    font-size: 4rem;
+  }
+}
+
+.register-login-link:hover {
+  color: var(--pink);
+}
+
+.close-button {
+  align-self:flex-end;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 2.5rem;
+  padding: 0;
+}

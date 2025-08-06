@@ -46,8 +46,10 @@ const NavBar = () => {
           </button>
         </div>
         <div className='right-nav'>
-          <UserAuth/>
-          <img src={lineicon} alt="lineicon" height='25px' />
+          <div className='user-auth'>
+            <UserAuth onClose={handleCloseNavMenu } />
+          </div>
+          <img className='user-auth' src={lineicon} alt="lineicon" height='25px' />
           <Search />
         </div>
       </div>

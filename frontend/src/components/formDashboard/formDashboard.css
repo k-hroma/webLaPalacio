@@ -1,0 +1,186 @@
+/* Contenedor principal */
+.dashboard-container {
+  width: 100%;
+  padding: 1rem;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.title-cont {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+/* Botón de cerrar sesión */
+.logout-button {
+  position: absolute;
+  right: 2rem;
+  background-color: var(--pink);
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.logout-button:hover {
+  background-color: #ea6ec9;
+}
+
+/* Título */
+.dashboard-title {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+/* Buscador */
+.search-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 8px;
+}
+
+.search-input-dash {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: border 0.3s;
+}
+
+.search-input-dash:focus {
+  outline: none;
+  border: 1px solid #007bff;
+}
+
+.search-button-dash {
+  background-color: #007bff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+.search-button-dash:hover {
+  background-color: #0056b3;
+}
+
+.search-icon {
+  width: 18px;
+  height: 18px;
+  filter: invert(100%);
+}
+
+/* Formulario en dos columnas: campos a la izquierda y botones a la derecha */
+.book-form {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.form-fields {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Grupo de campos */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 500;
+  margin-bottom: 2.5px;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"] {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: border 0.3s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border: 1px solid #007bff;
+}
+
+/* Checkbox */
+.checkbox-group {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Botones alineados en columna */
+.form-buttons {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s;
+  min-height: 42px; /* Botones del mismo tamaño */
+}
+
+.btn.add {
+  background-color: #4caf50;
+}
+.btn.add:hover {
+  background-color: #388e3c;
+}
+
+.btn.update {
+  background-color: #2196f3;
+}
+.btn.update:hover {
+  background-color: #1976d2;
+}
+
+.btn.delete {
+  background-color: #f44336;
+}
+.btn.delete:hover {
+  background-color: #d32f2f;
+}
+
+/* Fila de precio y stock */
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.form-row .form-group.half {
+  flex: 1;
+}
+
