@@ -8,8 +8,6 @@ import { ResultadosBusqueda } from '../views/ResultadosBusqueda'
 import { Dashboard } from '../views/Dashboard'
 import { RegisterUser } from '../views/RegisterUser'
 import { Login } from '../views/Login'
-import { PrivateRoute } from './PrivateRoute'
-
 
 const RouterApp = () => { 
   return (
@@ -23,7 +21,7 @@ const RouterApp = () => {
         <Route path='/resultados' element={<ResultadosBusqueda />} />
         <Route path='/register' element={<RegisterUser />} />
         <Route path='/login' element={<Login/>} />
-        <Route path='/dashboard' element={ <PrivateRoute requiredRole="admin"><Dashboard/></PrivateRoute>}/>
+        <Route path='/dashboard' element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   )

@@ -62,3 +62,11 @@
   color: var(--brown);
 
 }
+
+/* Contenedor de botones de admin */
+.admin-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+

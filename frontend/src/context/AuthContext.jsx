@@ -18,17 +18,16 @@ const AuthProvider = ({ children }) => {
   //Creo una variable de estado llamada token.
   //La inicializo desde localStorage, por si el usuario ya tenía una sesión activa guardada.
   const [token, setToken] = useState(() => localStorage.getItem("token"));
-  //Creo una variable de estado llamada user.
-  //La inicializo desde localStorage, pero decodificando el token para extraer datos del usuario (como email, id, role, etc.).
+  
   const getToken = () => {
     const storedToken = localStorage.getItem("token");
     return storedToken ? jwtDecode(storedToken) : null;
   }
   
+  //Creo una variable de estado llamada user 
+  //La inicializo desde localStorage, pero decodificando el token para extraer datos del usuario (como email, id, role, etc.).
   const [user, setUser] = useState(getToken);
-
-  const [admin, setAdmin] = useState(getToken)
-
+  
   const [loggedOut, setLoggedOut] = useState(false);
 
   //Defino una función para guardar un nuevo token (por ejemplo, al hacer login).
@@ -47,7 +46,6 @@ const AuthProvider = ({ children }) => {
     localStorage.removeItem("token");  // borra el token del navegador
     setToken(null);                    // limpia el estado local
     setUser(null);                     // borra el usuario
-    alert("Sesión cerrada");
   };
   
   // Este useEffect se ejecuta una vez al montar el componente (por el []).
@@ -65,7 +63,7 @@ const AuthProvider = ({ children }) => {
   // Retorna el proveedor del contexto (<AuthContext.Provider>), con los valores que va a compartir:
   
   return (
-    <AuthContext.Provider value={{ user, token, admin, setUser, setAdmin, handleToken, handleLogOut, setLoggedOut }}>
+    <AuthContext.Provider value={{ user, token, setUser, handleToken, handleLogOut, setLoggedOut, loggedOut }}>
       {children}
     </AuthContext.Provider>
   );

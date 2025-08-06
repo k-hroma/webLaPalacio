@@ -1,25 +1,37 @@
-/* Contenedor principal */
+.dash-wraper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 2rem;
+}
+
 .dashboard-container {
   width: 100%;
-  padding: 1rem;
+  margin: 0 auto;
+  padding: 2rem;
   background: #ffffff;
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  position: relative;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
 }
 
 .title-cont {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  position: relative;
 }
 
-/* Botón de cerrar sesión */
+/* Botón Cerrar Sesión  */
 .logout-button {
-  position: absolute;
-  right: 2rem;
-  background-color: var(--pink);
+  position: static;
+  margin-left: auto;
+  margin-bottom: 1rem;
+  transform: none;
+  background-color: var(--brown);
   color: white;
   border: none;
   padding: 8px 14px;
@@ -29,27 +41,27 @@
   transition: background 0.3s;
 }
 .logout-button:hover {
-  background-color: #ea6ec9;
+  background-color: #6e3d00;
 }
 
-/* Título */
 .dashboard-title {
   text-align: center;
-  margin-bottom: 1rem;
   font-size: 1.8rem;
   color: #333;
+  width: 100%;
 }
 
-/* Buscador */
 .search-container {
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 .search-input-dash {
   flex: 1;
+  min-width: 200px;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -73,36 +85,32 @@
   justify-content: center;
   transition: background 0.3s;
 }
-
 .search-button-dash:hover {
   background-color: #0056b3;
 }
-
 .search-icon {
   width: 18px;
   height: 18px;
   filter: invert(100%);
 }
 
-/* Formulario en dos columnas: campos a la izquierda y botones a la derecha */
 .book-form {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   gap: 20px;
-  align-items: flex-start;
 }
 
 .form-fields {
-  flex: 3;
   display: flex;
   flex-direction: column;
   gap: 15px;
+  width: 100%;
 }
 
-/* Grupo de campos */
 .form-group {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .form-group label {
@@ -118,7 +126,8 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   font-size: 0.95rem;
-  transition: border 0.3s;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .form-group input:focus {
@@ -126,23 +135,38 @@
   border: 1px solid #007bff;
 }
 
-/* Checkbox */
-.checkbox-group {
+.form-row {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+.form-row .form-group.half {
+  flex: 1;
+  min-width: 140px;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.form-actions .checkbox-group {
+  display: flex;
   flex-direction: row;
   align-items: center;
   gap: 8px;
 }
 
-/* Botones alineados en columna */
-.form-buttons {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.form-actions .btn.add {
+  width: auto;
+  min-width: 120px;
 }
 
 .btn {
-  width: 100%;
   padding: 12px;
   font-size: 0.95rem;
   border: none;
@@ -150,37 +174,112 @@
   color: white;
   cursor: pointer;
   transition: background 0.3s;
-  min-height: 42px; /* Botones del mismo tamaño */
+  min-height: 42px;
 }
 
 .btn.add {
-  background-color: #4caf50;
+  background-color: var(--pink);
 }
 .btn.add:hover {
-  background-color: #388e3c;
+  background-color: #ff4ec7;
 }
 
-.btn.update {
-  background-color: #2196f3;
-}
-.btn.update:hover {
-  background-color: #1976d2;
+.dash-search-results {
+  display: grid;
+  align-items: stretch;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 1.5rem;
+  row-gap: 1.5rem;
+  padding: 2rem 2rem;
+  @media (max-width: 880px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (max-width: 660px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 450px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
-.btn.delete {
-  background-color: #f44336;
-}
-.btn.delete:hover {
-  background-color: #d32f2f;
-}
-
-/* Fila de precio y stock */
-.form-row {
+.dash-results-container {
   display: flex;
-  gap: 15px;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.form-row .form-group.half {
-  flex: 1;
+.admin-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.admin-buttons button {
+  font-family: "Neue Montreal Medium";
+  font-size: clamp(0.8rem, 1vw, 1rem);
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
+.btn-update {
+  background-color: var(--pink);
+  color: white;
+}
+.btn-update:hover {
+  background-color: #ff4ec7;
+}
+.btn-delete {
+  background-color: var(--brown);
+  color: white;
+}
+.btn-delete:hover {
+  background-color: #6e3d00;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 660px) {
+  /* El botón sigue siendo el mismo, solo deja de estar absolute */
+  .logout-button {
+    position: static;
+    margin-left: auto;
+    margin-bottom: 10px;
+    transform: none;
+  }
+
+  .title-cont {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .dashboard-title {
+    text-align: left;
+    width: 100%;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .form-actions .btn.add {
+    width: 100%;
+  }
+}
+
+@media (max-width: 320px) {
+  .search-container {
+    flex-direction: column;
+  }
+
+  .search-input-dash,
+  .search-button-dash {
+    width: 100%;
+  }
+}

@@ -1,7 +1,6 @@
 import './itembook.css'
 import { useState } from 'react';
 
-
 const ItemBook = ({ index, itemSrc, itemAlt, title, lastName, firstName, price }) => { 
 
   const bgColors = [
@@ -58,11 +57,11 @@ const ItemBook = ({ index, itemSrc, itemAlt, title, lastName, firstName, price }
       <div className='info-container'>
         <div className='txt-content'>
           <p className='txt-title'>{title.toUpperCase()}</p>
-          <p className='txt-author'>{lastName}{firstName }</p>
+          <p className='txt-author'>{lastName} {firstName }</p>
         </div>
-          <div className='precio-content'>
-          <p>${price}</p>
-          </div>  
+        <div className='precio-content'>
+        <p>${price}</p>
+        </div>
       </div>
     </div>
   )

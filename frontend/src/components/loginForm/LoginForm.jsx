@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext'
 import { setLogRequest } from '../../services/loginServices';
+import { toast } from "react-toastify";
 
 const LoginForm = () => { 
   const { handleToken } = useAuth()
@@ -32,18 +33,24 @@ const LoginForm = () => {
         password: formData.password
       }
       const loginResponse = await setLogRequest(dataLogUser)
-      console.error(loginResponse.message)
       handleToken(loginResponse.token)
       if (loginResponse.data.role === "admin") {
         navigate("/dashboard")
-      } else { navigate('/') }
+      } else if (loginResponse.data.role === "user") {
+        toast.success(`Usuario: ${loginResponse.data.email} logeado exitosamente`)
+        navigate('/')
+      } else {
+        toast.error(`${loginResponse.message}`)
+       }
+      
 
       setFormData({email: "", password: ""})
     
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : "Unknown error";
     console.error(errMsg);
-    setError("Contraseña o usuario incorrecto")
+      setError("Contraseña o usuario incorrecto")
+      setFormData({email: "", password: ""})
   }}
   
   const handleVisibilityPass = () => {
