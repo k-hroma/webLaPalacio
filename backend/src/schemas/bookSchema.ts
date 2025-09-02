@@ -9,7 +9,8 @@ const AddBookSchema = z.object({
   editorial: z.string().trim().min(1, "Editorial is required"),
   price: z.number().nonnegative("Price must be a positive number"),
   stock: z.number().int().nonnegative("Stock must be 0 or more").default(0).optional(),
-  latestBook: z.boolean().default(false)
+  latestBook: z.boolean().default(false),
+  url: z.string().trim().min(1, "ML URL is required"),
 }).strict()
 
 type AddBookBody = z.infer<typeof AddBookSchema>;
@@ -23,7 +24,8 @@ const UpdateBookSchema = z.object({
   editorial: z.string().min(1).optional(),
   price: z.number().nonnegative().optional(),
   stock: z.number().int().nonnegative().optional(),
-  latestBook: z.boolean().default(false).optional()
+  latestBook: z.boolean().default(false).optional(),
+  url: z.string().trim().min(1, "Image URL is required"),
 }).strict()
 
 type UpdateBookBody = z.infer<typeof UpdateBookSchema>;

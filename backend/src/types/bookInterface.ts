@@ -6,8 +6,9 @@ interface IBook {
   firstName: string,
   editorial: string,
   price: number,
-  stock?: number
-  latestBook: boolean
+  stock?: number,
+  latestBook: boolean,
+  url:string
 }
 
 export { IBook }

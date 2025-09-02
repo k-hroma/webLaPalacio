@@ -1,7 +1,8 @@
 import './itembook.css'
 import { useState } from 'react';
+import { Link } from 'react-router-dom'
 
-const ItemBook = ({ index, itemSrc, itemAlt, title, lastName, firstName, price }) => { 
+const ItemBook = ({ index, itemSrc, itemAlt, title, lastName, firstName, price, url }) => { 
 
   const bgColors = [
     '#CDB0EA', 
@@ -60,7 +61,10 @@ const ItemBook = ({ index, itemSrc, itemAlt, title, lastName, firstName, price }
           <p className='txt-author'>{lastName} {firstName }</p>
         </div>
         <div className='precio-content'>
-        <p>${price}</p>
+          <p>${price}</p>
+          <Link className='link-ml' to={url} target='_blanc'>
+            <button type='button' className='item-book-btn'>Comprar</button>
+          </Link>
         </div>
       </div>
     </div>

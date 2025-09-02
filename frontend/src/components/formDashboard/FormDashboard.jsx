@@ -1,10 +1,11 @@
 import './formDashboard.css'
 import searchIcon from '../../assets/icons/lupa.svg'
 import { useState } from 'react';
-import { getSearchTerm, postNewBook, deleteRequest } from '../../services/bookServices';
+import { getSearchTerm, postRequest, deleteRequest } from '../../services/bookServices';
 import { toast } from "react-toastify";
 import { useSearch } from '../../context/SearchContext';
 import { ItemBook } from '../itemBook/ItemBook';
+
 
 const FormDashboard = () => {
 
@@ -21,14 +22,16 @@ const FormDashboard = () => {
     editorial: "",
     price: 0,
     stock: 0,
-    latestBook: false
+    latestBook: false,
+    url: ""
   })
 
-  const handleSubmit = async (e) => { 
+  const handleAddBook = async (e) => { 
     e.preventDefault()
-    const { img, isbn, title, lastName, firstName, editorial, price, stock, latestBook } = formData;
+    const { img, isbn, title, lastName, firstName, editorial, price, stock, latestBook, url } = formData;
 
     if (
+      !url.trim() ||
       !img.trim() ||
       !isbn.trim() ||
       !title.trim() ||
@@ -52,10 +55,11 @@ const FormDashboard = () => {
         editorial,
         price: Number(price),
         stock: Number(stock),
-        latestBook
+        latestBook,
+        url
       }
       
-      const addNewBook = await postNewBook(newBook)
+      const addNewBook = await postRequest(newBook)
       if (addNewBook.success) {
         toast.success(`${addNewBook.message}`)
       }
@@ -72,7 +76,8 @@ const FormDashboard = () => {
         editorial: "",
         price: 0,
         stock: 0,
-        latestBook: false
+        latestBook: false,
+        url
       });
       setError(""); 
 
@@ -151,6 +156,13 @@ const FormDashboard = () => {
     if (!confirmed) return
     try {
       const resDelBook = await deleteRequest(id)
+      if (!resDelBook.success) { 
+        throw new Error(resDelBook.message)
+      }
+      const delBook = resDelBook.data
+      const msg= `El libro ${delBook.title} fue eliminado exitosamente.`
+      toast.success(msg)
+      setResults([])
       
     } catch (error) {
       const errMsg =
@@ -163,6 +175,8 @@ const FormDashboard = () => {
       };
     }
   }
+
+  const handleUpdateBook = async () => { }
   
   return (
     <div className="dashboard-container">
@@ -187,11 +201,15 @@ const FormDashboard = () => {
         </div>
       </form>
 
-      <form className="book-form" onSubmit={handleSubmit}>
+      <form className="book-form" onSubmit={handleAddBook}>
         <div className="form-fields">
           <div className="form-group">
             <label htmlFor="img">URL de Imagen</label>
             <input type="text" id="img" name="img" placeholder="https://..." value={formData.img} onChange={handleChange} />
+          </div>
+            <div className="form-group">
+            <label htmlFor="url">URL de MercadoLibre</label>
+            <input type="text" id="url" name="url" placeholder="https://..." value={formData.url} onChange={handleChange} />
           </div>
 
           <div className="form-group">
@@ -253,6 +271,7 @@ const FormDashboard = () => {
               lastName={book.lastName}
               firstName={book.firstName}
               price={book.price}
+              url={book.url}
             />
             <div className='admin-buttons'>
               <button className="btn-update">Actualizar</button>

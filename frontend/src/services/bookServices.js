@@ -47,7 +47,7 @@ const getSearchTerm = async (term) => {
   }
 };
 
-const postNewBook = async (newBook) => {
+const postRequest = async (newBook) => {
   try {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -78,7 +78,33 @@ const postNewBook = async (newBook) => {
 };
 
 const deleteRequest = async (id) => {
-  console.log(id);
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      throw new Error("No token found in localStorage");
+    }
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    if (!response.ok) {
+      throw new Error(result.message || "Unexpected error");
+    }
+    return result;
+  } catch (error) {
+    const errMsg = error instanceof Error ? error.message : "Unknown error";
+    console.error(errMsg);
+    return {
+      success: false,
+      message: errMsg,
+    };
+  }
 };
 
-export { getRequest, getSearchTerm, postNewBook, deleteRequest };
+const patchRequest = async (dataBook, id) => {};
+
+export { getRequest, getSearchTerm, postRequest, deleteRequest, patchRequest };

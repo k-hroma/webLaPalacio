@@ -51,6 +51,7 @@ const AllBooks = () => {
             lastName={book.lastName}
             firstName={book.firstName}
             price={book.price}
+            url={book.url}
             />
         ))
         }

@@ -35,6 +35,12 @@
   flex-direction: column;
 }
 
+.precio-content {
+  display:flex;
+  flex-direction: column;
+  align-items: end;
+}
+
 .precio-content p {
   font-family: 'PPEditorialNew';
   font-weight: 100;
@@ -69,4 +75,20 @@
   gap: 0.5rem;
   margin-top: 0.5rem;
 }
+
+.item-book-btn {
+  background-color: transparent;
+  padding: .2rem 1rem;
+  border-radius: 1rem;
+  color: var(--orange);
+  border-color: var(--orange);
+  font-family: 'Neue Montreal Medium';
+  font-weight: 400;
+}
+
+.item-book-btn:hover {
+  border-color: var(--pink);
+  color: var(--pink);  
+}
+
 
