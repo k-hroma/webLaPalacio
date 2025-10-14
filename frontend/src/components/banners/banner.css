@@ -3,6 +3,18 @@
   width: 100%;
 }
 
-.banner-container img {
+.banner-gender-big {
   width: 100%;
+    @media (max-width: 400px) {
+    display: none;
+  }
+
+}
+
+.banner-gender-small {
+  width: 100%;
+  @media (min-width: 401px) {
+    display: none;
+  }
+
 }

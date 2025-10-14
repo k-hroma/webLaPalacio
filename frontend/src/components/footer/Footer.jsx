@@ -7,17 +7,18 @@ const Footer = () => {
       <div className='bg-footer'></div>
       <div className='footer-content'>
         <div className='left-content'>
-          <p className='footer-main-txt'>Libros:</p>
-          <p className='footer-main-txt'>Usados</p>
-          <p className='footer-main-txt'>Recomendados</p>
-          <p className='footer-main-txt'>Novedaeds</p>
+          <p className='footer-main-txt'>Impresos:</p>
+          <p className='footer-main-txt'>Novedades</p>
+          <p className='footer-main-txt'>Libros</p>
+          <p className='footer-main-txt'>Fanzines</p>
         </div>
         <div className='right-content'>
           <p className='footer-main-txt'>Escritorxs</p>
           <p className='footer-main-txt'>Nosotrxs</p>
           <p className='footer-main-txt'>Contacto</p>
           <p className='footer-main-txt'>-</p>
-          <p className='footer-main-txt'>Tienda</p>
+          <p className='cr-text'>@lapalaciolibros</p>
+
         </div>
         <div className='copy-texts'>
           <p className='cr-text'>@lapalaciolibros. Copyright - All rights reserved</p>

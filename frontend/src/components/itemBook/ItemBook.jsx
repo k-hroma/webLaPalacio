@@ -46,8 +46,8 @@ const ItemBook = ({ index, itemSrc, itemAlt, title, lastName, firstName, price, 
   return (
     <div className='item-book-container'>
       <div style={hover 
-          ? { backgroundColor: bgColor, border: "clamp(2px, 1vw, 10px) solid #FF76DC" } 
-        : { backgroundColor: bgColor, border: `clamp(2px, 1vw, 10px) solid ${bgBorder}` }}
+          ? { backgroundColor: bgColor, border: "10px solid #FF76DC" } 
+        : { backgroundColor: bgColor, border: `10px solid ${bgBorder}` }}
         onMouseEnter={handleMouseOver}
         onMouseLeave={handleMouseOut}
         className='cover-container'>
@@ -56,16 +56,21 @@ const ItemBook = ({ index, itemSrc, itemAlt, title, lastName, firstName, price, 
         </div>
       </div>
       <div className='info-container'>
+        <div className='info-txt-precio-container'>
         <div className='txt-content'>
           <p className='txt-title'>{title.toUpperCase()}</p>
           <p className='txt-author'>{lastName} {firstName }</p>
         </div>
         <div className='precio-content'>
           <p>${price}</p>
+        </div>
+        </div>
+        <div className='ver-mas-btn-cont'>
           <Link className='link-ml' to={url} target='_blanc'>
-            <button type='button' className='item-book-btn'>Comprar</button>
+            <button type='button' className='item-book-btn'>Ver más</button>
           </Link>
         </div>
+
       </div>
     </div>
   )

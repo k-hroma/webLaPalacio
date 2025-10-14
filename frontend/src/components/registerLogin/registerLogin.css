@@ -22,7 +22,7 @@
   }
 }
 
-.menu-links-wrapper {
+.menu-links-wrapper-register {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -49,7 +49,7 @@
   color: var(--pink);
 }
 
-.close-button {
+.close-button-register {
   align-self:flex-end;
   background: transparent;
   border: none;

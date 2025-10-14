@@ -36,14 +36,19 @@ const HomeWriters = () => {
       <div className="writers-container">
         <div className="txt-writers-header-container">
           <p className="txt-writers">Escritorxs recomendados</p>
-          <Link className="link-writers" to='/escritorxs'>Ver más escritorxs +</Link>
+          <Link className="link-writers-top" to='/escritorxs'>Ver más escritorxs +</Link>
         </div>
         <div className="txt-writers-container">
           {books && books.map(book => (
-            <p key={book.isbn}>{book.lastName} <span>{book.firstName }</span></p>
+            <div>
+              <p className="txt-writers-container-authors" key={book.isbn}>{book.lastName} {book.firstName} <span className="txt-gender-container">{book.price}</span></p>
+              <p className="txt-g-c-small">{book.price}</p>
+            </div>
           ))
           }
-
+        </div>
+        <div className="ver-mas-writers">
+        <Link className="link-writers" to='/escritorxs'>Ver más escritorxs +</Link>
         </div>
       </div>
 

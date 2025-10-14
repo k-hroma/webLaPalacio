@@ -47,6 +47,9 @@
   z-index: 8;
   padding-left: 2rem;
   padding-top: 3.5rem;
+  @media (max-width: 795px) {
+  padding-left: 1rem;
+  }
 }
 
 .center-nav {
@@ -69,6 +72,10 @@
   z-index: 8;
   padding-right: 2rem;
   padding-top: 3.5rem;
+  @media (max-width: 795px) {
+
+  padding-right: 1rem;
+  }
 }
 
 .btn-home-menu {

@@ -5,8 +5,8 @@ import './registerLogin.css'
 const RegisterLogin = ({ onClose }) => {
   return (
     <section className="open-register-login-container">
-      <div className="menu-links-wrapper">
-        <button onClick={onClose} className='close-button' type='button'>
+      <div className="menu-links-wrapper-register">
+        <button onClick={onClose} className='close-button-register' type='button'>
           <img src={closereglog} alt="clos-nav-icon" width='28px' height='18px' />
         </button>
         <Link className='register-login-link' to='/login' onClick={onClose}>Login</Link>
