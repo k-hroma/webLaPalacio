@@ -23,12 +23,13 @@ const FormDashboard = () => {
     price: 0,
     stock: 0,
     latestBook: false,
+    fanzine:false,
     url: ""
   })
 
   const handleAddBook = async (e) => { 
     e.preventDefault()
-    const { img, isbn, title, lastName, firstName, editorial, price, stock, latestBook, url } = formData;
+    const { img, isbn, title, lastName, firstName, editorial, price, stock, latestBook, fanzine, url } = formData;
 
     if (
       !url.trim() ||
@@ -56,6 +57,7 @@ const FormDashboard = () => {
         price: Number(price),
         stock: Number(stock),
         latestBook,
+        fanzine,
         url
       }
       
@@ -77,6 +79,7 @@ const FormDashboard = () => {
         price: 0,
         stock: 0,
         latestBook: false,
+        fanzine:false,
         url
       });
       setError(""); 
@@ -253,6 +256,8 @@ const FormDashboard = () => {
             <div className="form-group checkbox-group">
               <input type="checkbox" id="latestBook" name="latestBook" checked={formData.latestBook} onChange={handleChange} />
               <label htmlFor="latestBook">Novedad</label>
+              <input type="checkbox" id="fanzine" name="fanzine" checked={formData.fanzine} onChange={handleChange} />
+              <label htmlFor="fanzine">Fanzine</label>
             </div>
             <button type="submit" className="btn add">Agregar</button>
           </div>

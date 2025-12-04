@@ -59,16 +59,18 @@ const ItemBook = ({ index, itemSrc, itemAlt, title, lastName, firstName, price, 
         <div className='info-txt-precio-container'>
         <div className='txt-content'>
           <p className='txt-title'>{title.toUpperCase()}</p>
-          <p className='txt-author'>{lastName} {firstName }</p>
         </div>
         <div className='precio-content'>
           <p>${price}</p>
         </div>
         </div>
+        <div>
+          <p className='txt-author'>{lastName} {firstName }</p>
         <div className='ver-mas-btn-cont'>
           <Link className='link-ml' to={url} target='_blanc'>
             <button type='button' className='item-book-btn'>Ver más</button>
           </Link>
+          </div>
         </div>
 
       </div>

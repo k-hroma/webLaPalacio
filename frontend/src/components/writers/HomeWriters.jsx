@@ -41,8 +41,8 @@ const HomeWriters = () => {
         <div className="txt-writers-container">
           {books && books.map(book => (
             <div>
-              <p className="txt-writers-container-authors" key={book.isbn}>{book.lastName} {book.firstName} <span className="txt-gender-container">{book.price}</span></p>
-              <p className="txt-g-c-small">{book.price}</p>
+              <p className="txt-writers-container-authors" key={book.isbn}>{book.lastName} {book.firstName} <span className="txt-gender-container">{book.editorial}</span></p>
+              <p className="txt-g-c-small">{book.editorial}</p>
             </div>
           ))
           }

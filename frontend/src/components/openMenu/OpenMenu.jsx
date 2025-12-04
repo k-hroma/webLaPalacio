@@ -9,10 +9,10 @@ const OpenMenu = ({ onClose }) => {
       <div className='links-container'>
         <button className='close-button' type='button' onClick={onClose}><img src={closenavicon} alt="clos-nav-icon" width='28px' height='18px' /></button>
         <div className="menu-links-wrapper">  
-          <Link className='menu-link' to='/libros' onClick={onClose}>Impresos</Link>
+          <Link className='menu-link' to='/' onClick={onClose}>Impresos</Link>
           <div className='sub-menu-container'>
           <Link className='sub-menu-link' to='/novedades' onClick={onClose}>Novedades</Link>
-          <Link className='sub-menu-link' to='/usados' onClick={onClose}>Libros</Link>
+          <Link className='sub-menu-link' to='/libros' onClick={onClose}>Libros</Link>
           <Link className='sub-menu-link' to='/fanzines' onClick={onClose}>Fanzines</Link>  
           </div>
           <Link className='menu-link' to='/escritorxs' onClick={onClose}>Escritorxs</Link>

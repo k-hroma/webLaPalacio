@@ -40,8 +40,11 @@ const AllWriters = () => {
           </div>
           <div className="txt-writers-container">
             {books && books.map(book => (
-              <p key={book.isbn}>{book.lastName} <span>{book.firstName }</span></p>
-            ))
+            <div>
+              <p className="txt-writers-container-authors" key={book.isbn}>{book.lastName} {book.firstName} <span className="txt-gender-container">{book.editorial}</span></p>
+              <p className="txt-g-c-small">{book.editorial}</p>
+            </div>
+          ))
             }
           </div>
         </div>

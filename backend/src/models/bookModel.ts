@@ -11,6 +11,7 @@ const bookSchema = new Schema<IBook>({
   price: { type: Number, required: true },
   stock: { type: Number, default: 0 },
   latestBook: { type: Boolean, default: false, required: true },
+  fanzine: { type: Boolean, default: false, required: true },
   url: { type: String, required: true, trim: true },
 }, {
   versionKey: false,

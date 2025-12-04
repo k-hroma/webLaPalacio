@@ -8,6 +8,7 @@ interface IBook {
   price: number,
   stock?: number,
   latestBook: boolean,
+  fanzine:boolean,
   url:string
 }
 

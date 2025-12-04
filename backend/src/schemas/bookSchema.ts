@@ -10,6 +10,7 @@ const AddBookSchema = z.object({
   price: z.number().nonnegative("Price must be a positive number"),
   stock: z.number().int().nonnegative("Stock must be 0 or more").default(0).optional(),
   latestBook: z.boolean().default(false),
+  fanzine: z.boolean().default(false),
   url: z.string().trim().min(1, "ML URL is required"),
 }).strict()
 
@@ -25,6 +26,7 @@ const UpdateBookSchema = z.object({
   price: z.number().nonnegative().optional(),
   stock: z.number().int().nonnegative().optional(),
   latestBook: z.boolean().default(false).optional(),
+  fanzine:z.boolean().default(false).optional(),
   url: z.string().trim().min(1, "Image URL is required"),
 }).strict()
 

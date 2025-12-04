@@ -46,7 +46,7 @@
 
 .grid-container {
   display: grid;
-  align-items: start;
+  justify-content: space-between;
   grid-template-columns: repeat(4, 1fr);
   column-gap: 1.5rem;
   grid-template-rows: repeat(2, 1fr);
