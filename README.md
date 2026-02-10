@@ -24,6 +24,7 @@ y buenas prácticas de seguridad y validación.
 
 ## 📁 Estructura del proyecto
 
+```
 /webLaPalacio
 ├── /frontend              # React + Vite
 │   ├── /src
@@ -45,9 +46,10 @@ y buenas prácticas de seguridad y validación.
 │   │   ├── /models        # Mongoose schemas
 │   │   ├── /routes
 │   │   ├── /schemas       # Zod schemas
-│   │   └── /types
+│   │   └── /types     
 │   └── ...
 └── README.md
+```
 
 
 ## 🚀 Cómo correrlo localmente
