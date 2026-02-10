@@ -25,29 +25,45 @@ y buenas prácticas de seguridad y validación.
 ## 📁 Estructura del proyecto
 
 /webLaPalacio
-├── /frontend          # React + Vite
+├── /frontend              # React + Vite
 │   ├── /src
 │   │   ├── /assets
 │   │   ├── /components
-│   │   ├── /context   # Auth context
+│   │   ├── /context       # Auth context
 │   │   ├── /layout
 │   │   ├── /routers
-│   │   └── /services  # API calls
+│   │   ├── /services      # API calls
 │   │   ├── /styles
 │   │   ├── /utils
-│   │   ├── /views
+│   │   └── /views
 │   └── ...
-├── /backend           # Node + Express
+├── /backend               # Node + Express
 │   ├── /src
-│   │   ├── /config    # MongoDB
+│   │   ├── /config        # MongoDB
 │   │   ├── /controllers
-│   │   ├── /middlewares  # Auth + validaciones
-│   │   ├── /models    # Mongoose schemas
+│   │   ├── /middlewares   # Auth + validaciones
+│   │   ├── /models        # Mongoose schemas
 │   │   ├── /routes
-│   │   ├── /schemas   # Zod schemas
-│   │   └── /types     
+│   │   ├── /schemas       # Zod schemas
+│   │   └── /types
 │   └── ...
 └── README.md
+
+
+## 🚀 Cómo correrlo localmente
+
+### Prerrequisitos
+- Node.js v18+
+- MongoDB local o cuenta en MongoDB Atlas
+
+### Backend
+```bash
+cd backend
+npm install
+# Crear archivo .env con:
+# MONGODB_URI=tu_uri_de_mongo
+# JWT_SECRET=tu_secreto
+npm run dev
 
 
 
