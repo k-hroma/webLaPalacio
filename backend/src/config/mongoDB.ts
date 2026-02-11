@@ -1,84 +1,56 @@
-import dotenv from 'dotenv'
-dotenv.config()
-import { connect, ConnectionStates } from 'mongoose'
-import { ConnectResults } from '../types/connectionResults'
+import { connect, ConnectionStates } from 'mongoose';
+import { ConnectResults } from '../types/connectionResults';
 
-// URI de conexión a MongoDB desde las variables de entorno
-const MONGO_URIDB = process.env.MONGO_URIDB || ""
+const MONGO_URI = process.env.MONGO_URI;
 
-// Estado de conexión global
-let connectMDB: { isConnected: boolean } = { isConnected: false }
+// Estado global para patrón Singleton (evita reconexiones en serverless)
+let isConnected = false;
 
-// Función asíncrona para conectar a MongoDB
+/**
+ * Establece conexión con MongoDB.
+ * Reutiliza conexiones activas en entornos serverless.
+ */
 const connectMongoDB = async (): Promise<ConnectResults> => {
-  // Verifico la existencia de la URI de conexión
-  if (!MONGO_URIDB) {
-    const errMsg = "MongoDB URI is missing or empty"
-    console.error(errMsg);
-    return {
-      success: false,
-      message: errMsg
-    }
+  if (!MONGO_URI) {
+    throw new Error('MONGO_URI environment variable is required');
   }
 
-  // Retorno si ya existe una conexión activa
-  if (connectMDB.isConnected) {
-    const msg = "Using existing MongoDB connection"
-    console.info(msg)
-    return {
-      success: true,
-      message: msg
-    }
+  if (isConnected) {
+    console.info('📦 Using existing MongoDB connection');
+    return { success: true, message: 'Using existing connection' };
   }
 
   try {
-    // Intento establecer una nueva conexión
-    const resultConnection = await connect(MONGO_URIDB, {
+    const conn = await connect(MONGO_URI, {
       serverSelectionTimeoutMS: 5000,
       maxPoolSize: 10,
-    })
+    });
 
-    // Verifico que se haya establecido la conexión
-    if (!resultConnection) {
-      throw new Error("Unexpected error while connecting to MongoDB")
+    if (conn.connection.readyState !== ConnectionStates.connected) {
+      throw new Error('MongoDB connection not ready');
     }
 
-    // Compruebo que Mongoose esté conectado
-    const isConnected = resultConnection.connection.readyState === ConnectionStates.connected
-    if (!isConnected) {
-      throw new Error("Connection established but not ready")
-    }
+    isConnected = true;
 
-    // Marco la conexión como activa
-    connectMDB.isConnected = true
+    // Event listeners para monitoreo
+    conn.connection.on('disconnected', () => {
+      isConnected = false;
+      console.warn('⚠️ MongoDB disconnected');
+    });
 
-    // Configuro listeners para cambios en el estado de conexión
-    resultConnection.connection.on('disconnected', () => {
-      connectMDB.isConnected = false;
-      console.warn("MongoDB connection lost")
-    })
+    conn.connection.on('reconnected', () => {
+      isConnected = true;
+      console.info('✅ MongoDB reconnected');
+    });
 
-    resultConnection.connection.on('reconnected', () => {
-      connectMDB.isConnected = true;
-      console.info("MongoDB connection reestablished")
-    })
+    return { success: true, message: 'MongoDB connected successfully' };
 
-    // Retorno éxito
-    const msg = "MongoDB connected successfully."
-    return {
-      success: true,
-      message: msg
-    }
-
-  } catch (error: unknown) {
-    // Manejo de errores
-    const errMsg = error instanceof Error ? error.message : "Fatal error: MongoDB connection failed"
-    console.error(errMsg)
-    return {
-      success: false,
-      message: errMsg
-    }
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Unknown connection error';
+    
+    throw new Error(`❌ MongoDB connection failed: ${message}`);
+  
   }
-}
+};
 
-export { connectMongoDB }
+export { connectMongoDB };

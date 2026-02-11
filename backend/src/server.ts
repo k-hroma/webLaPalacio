@@ -30,12 +30,6 @@ const startServer = async (): Promise<void> => {
   // Espera a que la conexión se establezca antes de continuar.
   const dbConnection = await connectMongoDB();
   
-  // Verifica si la conexión a la base de datos fue exitosa.
-  // Si success es false, lanza error con el mensaje específico del fallo.
-  if (!dbConnection.success) {
-    throw new Error(`❌ Database connection failed: ${dbConnection.message}`);
-  }
-
   // Muestra en consola el mensaje de éxito de la conexión a MongoDB.
   console.log(`📦 ${dbConnection.message}`);
 
