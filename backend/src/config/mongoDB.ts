@@ -1,8 +1,7 @@
+import dotenv from 'dotenv'
+dotenv.config()
 import { connect, ConnectionStates } from 'mongoose'
 import { ConnectResults } from '../types/connectionResults'
-import dotenv from 'dotenv'
-
-dotenv.config()
 
 // URI de conexión a MongoDB desde las variables de entorno
 const MONGO_URIDB = process.env.MONGO_URIDB || ""

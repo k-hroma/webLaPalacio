@@ -1,4 +1,3 @@
-import express from "express";
 
 interface AuthPayload { 
   id: string;

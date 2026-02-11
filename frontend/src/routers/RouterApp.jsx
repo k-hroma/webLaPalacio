@@ -9,6 +9,7 @@ import { ResultadosBusqueda } from '../views/ResultadosBusqueda'
 import { Dashboard } from '../views/Dashboard'
 import { RegisterUser } from '../views/RegisterUser'
 import { Login } from '../views/Login'
+import { Contacto } from '../views/Contacto'
 
 const RouterApp = () => { 
   return (
@@ -19,7 +20,8 @@ const RouterApp = () => {
         <Route path='/novedades' element={<Novedades/>}/>
         <Route path='/libros' element={<Libros />} />
         <Route path='/fanzines' element={<Fanzines />} />
-        <Route path='/escritorxs' element={<Escritorxs/>}/>
+        <Route path='/escritorxs' element={<Escritorxs />} />
+        <Route path='/contacto' element={<Contacto />} />
         <Route path='/resultados' element={<ResultadosBusqueda />} />
         <Route path='/register' element={<RegisterUser />} />
         <Route path='/login' element={<Login/>} />
