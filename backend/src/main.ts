@@ -5,7 +5,6 @@ dotenv.config();
 // Importa la función startServer desde el archivo de configuración del servidor.
 import { startServer } from "./server";
 
-
 // Función principal que inicia la aplicación.
 // Es el único punto de control donde se decide si la aplicación continúa o termina.
 const main = async (): Promise<void> => {
