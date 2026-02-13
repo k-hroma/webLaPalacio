@@ -48,7 +48,7 @@ const connectMongoDB = async (): Promise<ConnectResults> => {
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown connection error';
     
-    throw new Error(`❌ MongoDB connection failed: ${message}`);
+    throw new Error(`MongoDB connection failed: ${message}`);
   
   }
 };

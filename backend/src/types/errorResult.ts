@@ -1,7 +1,7 @@
 interface ErrorResult { 
   success: boolean,
   message: string,
-  errorCode?: string | number
+  errorCode?: number | string
 }
 
 export { ErrorResult }

@@ -1,6 +1,6 @@
 // interface para retorno de objetos en las peticiones HTTP
 
-import { IRegisterUser, IUser } from "./authInterface";
+import { IRegisterUser } from "./authInterface";
 import { IBook } from "./bookInterface";
 interface QueryResponse { 
   success: boolean,
